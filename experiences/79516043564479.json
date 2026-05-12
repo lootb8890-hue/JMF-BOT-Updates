@@ -52142,26 +52142,6 @@
       "buy_losses": 119,
       "sell_wins": 185,
       "sell_losses": 127
-    },
-    "XAUUSD_TEST": {
-      "total_trades": 2,
-      "avg_atr": 10.0,
-      "avg_duration_win": 3600.0,
-      "avg_duration_loss": 0,
-      "best_session": null,
-      "worst_session": null,
-      "trend_bias": "NEUTRAL",
-      "volatility_profile": "normal",
-      "avg_confidence_win": 0,
-      "avg_confidence_loss": 0,
-      "peak_profit_avg": 0,
-      "buy_wins": 2,
-      "buy_losses": 0,
-      "sell_wins": 0,
-      "sell_losses": 0,
-      "avg_mae_win": 30.0,
-      "avg_mae_loss": 0.0,
-      "mae_points_avg": 0.0
     }
   }
 }
