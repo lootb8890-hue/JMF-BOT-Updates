@@ -52164,7 +52164,7 @@
       "mae_points_avg": 0.0
     },
     "XAUUSD_AGGR": {
-      "total_trades": 1,
+      "total_trades": 10,
       "avg_atr": 10.0,
       "avg_duration_win": 3600.0,
       "avg_duration_loss": 0,
@@ -52175,7 +52175,7 @@
       "avg_confidence_win": 0,
       "avg_confidence_loss": 0,
       "peak_profit_avg": 0,
-      "buy_wins": 1,
+      "buy_wins": 10,
       "buy_losses": 0,
       "sell_wins": 0,
       "sell_losses": 0,
