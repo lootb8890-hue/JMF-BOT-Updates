@@ -435,7 +435,22 @@
         function closeDetails() { clearInterval(liveInterval); document.getElementById('details-modal').style.display = 'none'; }
         function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(() => t.style.display='none', 2000); }
         function generateRandomKey() { const p = () => Math.random().toString(36).substring(2, 6).toUpperCase(); return `JMF-${p()}-${p()}-${p()}`; }
-        document.getElementById('new-key').value = generateRandomKey();
+        // --- AUTO REFRESH ON UPDATE ---
+        let lastVersion = null;
+        async function checkAdminVersion() {
+            try {
+                const res = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+                const currentTag = res.headers.get('ETag') || res.headers.get('Last-Modified');
+                if (lastVersion && currentTag && lastVersion !== currentTag) {
+                    console.log("🚀 New Admin Version detected! Reloading...");
+                    location.reload(true);
+                }
+                lastVersion = currentTag;
+            } catch (e) {}
+        }
+        setInterval(checkAdminVersion, 60000); // Check every minute
+        checkAdminVersion();
+
         lucide.createIcons();
     </script>
     <!-- QR Modal -->
