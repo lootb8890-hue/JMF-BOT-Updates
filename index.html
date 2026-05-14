@@ -189,10 +189,14 @@
 
                 if(devData && devData.url) {
                     try {
-                        await fetch(devData.url, { mode: 'no-cors' });
+                        const tunnelUrl = devData.tunnel_url || devData.url;
+                        // ⚡ CACHE BUSTER: Force browser to ignore old iframe cache
                         const cacheBuster = Date.now();
+                        const finalUrl = tunnelUrl.includes('?') ? `${tunnelUrl}&cb=${cacheBuster}` : `${tunnelUrl}?cb=${cacheBuster}`;
+                        
+                        await fetch(tunnelUrl, { mode: 'no-cors' });
                         const dashView = document.getElementById('dashboard-view');
-                        dashView.innerHTML = `<iframe id="dash-frame" src="${devData.url}?v=${cacheBuster}" style="width:100%; height:100%; border:none;"></iframe>`;
+                        dashView.innerHTML = `<iframe id="dash-frame" src="${finalUrl}" style="width:100%; height:100%; border:none;"></iframe>`;
                         dashView.style.display = 'block';
                         document.getElementById('login-screen').style.display = 'none';
                         
