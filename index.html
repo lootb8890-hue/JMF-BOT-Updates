@@ -124,12 +124,30 @@
         const LIC_URL = "https://jmf-bot-default-rtdb.firebaseio.com/licenses";
         const DEV_URL = "https://jmf-bot-default-rtdb.firebaseio.com/devices";
         
-        let deferredPrompt;
-        const installBtn = document.getElementById('pwa-install-btn');
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
+            window.addEventListener('load', () => { 
+                navigator.serviceWorker.register('sw.js?v=' + Date.now()).then(reg => {
+                    // Check for updates every time app is opened or focused
+                    reg.update();
+                });
+            });
         }
-        let retryInterval = null;
+        
+        // --- AUTO REFRESH ON UPDATE ---
+        let lastVersion = null;
+        async function checkAppVersion() {
+            try {
+                const res = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+                const currentTag = res.headers.get('ETag') || res.headers.get('Last-Modified');
+                if (lastVersion && currentTag && lastVersion !== currentTag) {
+                    console.log("🚀 New version detected! Reloading...");
+                    location.reload(true);
+                }
+                lastVersion = currentTag;
+            } catch (e) {}
+        }
+        setInterval(checkAppVersion, 60000); // Check every minute
+        checkAppVersion();
 
 
         async function checkConnection(devId) {
